@@ -25,3 +25,8 @@ dependencies {
     )
     testRuntime "org.objenesis:objenesis:2.1"
 }
+
+task execute(type:JavaExec) {
+    main = mainClassName
+    classpath = sourceSets.main.runtimeClasspath
+}
