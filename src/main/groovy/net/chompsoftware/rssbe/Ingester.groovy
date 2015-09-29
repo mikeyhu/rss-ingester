@@ -1,9 +1,12 @@
 package net.chompsoftware.rssbe
 
+import groovy.util.logging.Slf4j
 import org.apache.http.impl.client.DefaultHttpClient
 
-
+@Slf4j
 class Ingester {
+
+    static final long FOR_10_MINS = 1000 * 60 * 10
 
     public static void main(String[] args) {
 
@@ -13,10 +16,14 @@ class Ingester {
                 'http://uk.engadget.com/rss.xml'
         ]
 
-        urls.collect {
-            new RSSCollector(new DefaultHttpClient()).readUrl(it)
-        }.flatten {
-            println it.title
+        while(true) {
+            urls.collect {
+                new RSSCollector(new DefaultHttpClient()).readUrl(it)
+            }.flatten {
+                log.info it.title
+            }
+            sleep FOR_10_MINS
         }
+
     }
 }
