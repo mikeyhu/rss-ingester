@@ -38,9 +38,10 @@ class RssCollectorTests extends Specification {
 
         then:
         stories.size() == 52
+        stories[0].channelTitle == 'BBC News - Home'
         stories[0].title == 'Divisions on Syria laid bare at UN'
         stories[0].datePublished == Date.from(Instant.parse("2015-09-28T18:14:21.00Z"))
-        stories[0].id == "http://www.bbc.co.uk/news/world-middle-east-34378889"
+        stories[0]._id == "http://www.bbc.co.uk/news/world-middle-east-34378889"
         stories[0].link == "http://www.bbc.co.uk/news/world-middle-east-34378889#sa-ns_mchannel=rss&ns_source=PublicRSS20-sa"
     }
 
