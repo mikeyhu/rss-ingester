@@ -2,3 +2,5 @@
 .gradle/
 .idea/
 build/
+kb8/
+release.sh

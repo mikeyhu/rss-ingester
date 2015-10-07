@@ -9,6 +9,8 @@ import static groovyx.net.http.ContentType.JSON
 
 @Slf4j
 class Ingester {
+    static final API_PORT = 3000
+    static final API_BASE = baseUrl()
 
     static final long FOR_10_MINS = 1000 * 60 * 10
 
@@ -25,7 +27,7 @@ class Ingester {
             def stories = urls.collect {
                 new RSSCollector(new DefaultHttpClient()).readUrl(it)
             }.flatten { story ->
-                def builder = new HTTPBuilder('http://localhost:3000')
+                def builder = new HTTPBuilder("$API_BASE:$API_PORT")
                 builder.request(Method.POST, JSON) {
                     uri.path = '/stories'
                     body = story.toJson()
@@ -37,9 +39,15 @@ class Ingester {
 
                 }
             }
-            println "Inserted $inserted stories out of ${stories.size()} found."
+            log.info "Inserted $inserted stories out of ${stories.size()} found."
             sleep FOR_10_MINS
         }
 
+    }
+
+    public static String baseUrl() {
+        def dockerHost = System.getenv("DOCKER_HOST") ?: "tcp://localhost:2376"
+        def host = System.getenv()['RSSBE_API_SERVICE_HOST'] ?: (dockerHost =~ /\/\/(.*):/)[0][1]
+        "http://$host"
     }
 }
