@@ -2,6 +2,7 @@ import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.core.ConsoleAppender
 
 import static ch.qos.logback.classic.Level.INFO
+import static ch.qos.logback.classic.Level.ERROR
 
 appender("STDOUT", ConsoleAppender) {
     encoder(PatternLayoutEncoder) {
@@ -9,3 +10,5 @@ appender("STDOUT", ConsoleAppender) {
     }
 }
 root(INFO, ["STDOUT"])
+
+logger("org.quartz", ERROR, ["STDOUT"])

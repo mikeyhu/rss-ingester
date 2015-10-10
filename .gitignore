@@ -4,3 +4,4 @@
 build/
 kb8/
 release.sh
+deploy.sh
