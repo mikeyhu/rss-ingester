@@ -31,7 +31,8 @@ class RSSCollector {
                             title: it.title.toString(),
                             _id: it.guid.toString(),
                             link: it.link.toString(),
-                            datePublished: DATE_FORMAT.parse(it.pubDate.toString())
+                            datePublished: DATE_FORMAT.parse(it.pubDate.toString()),
+                            thumbnail: it.thumbnail[0]?.@url.toString()
                     )
                 }
                 return stories

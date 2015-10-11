@@ -43,6 +43,8 @@ class RssCollectorTests extends Specification {
         stories[0].datePublished == Date.from(Instant.parse("2015-09-28T18:14:21.00Z"))
         stories[0]._id == "http://www.bbc.co.uk/news/world-middle-east-34378889"
         stories[0].link == "http://www.bbc.co.uk/news/world-middle-east-34378889#sa-ns_mchannel=rss&ns_source=PublicRSS20-sa"
+
+        stories[2].thumbnail == "http://c.files.bbci.co.uk/143B5/production/_85796828_perspective_6-1024x532.jpg"
     }
 
 

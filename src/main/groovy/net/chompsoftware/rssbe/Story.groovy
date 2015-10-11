@@ -15,6 +15,7 @@ class Story {
     String _id
     String link
     private Date datePublished
+    String thumbnail
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
     Date getDatePublished() {
