@@ -51,7 +51,7 @@ class Ingester implements Job {
     }
 
     public static void main(String[] args) {
-
+        configure()
         Scheduler scheduler = new StdSchedulerFactory().getScheduler()
 
         JobDetail job = newJob(Ingester.class)
@@ -73,5 +73,9 @@ class Ingester implements Job {
         def dockerHost = System.getenv("DOCKER_HOST") ?: "tcp://localhost:2376"
         def host = System.getenv()['RSSBE_API_SERVICE_HOST'] ?: (dockerHost =~ /\/\/(.*):/)[0][1]
         "http://$host"
+    }
+
+    public static configure() {
+        System.setProperty "org.quartz.threadPool.threadCount","2"
     }
 }
