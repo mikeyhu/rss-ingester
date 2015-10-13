@@ -52,21 +52,27 @@ class Ingester implements Job {
 
     public static void main(String[] args) {
         configure()
-        Scheduler scheduler = new StdSchedulerFactory().getScheduler()
+        if(System.getenv("RUN_ONCE") == "true") {
+            Ingester ingester = new Ingester();
+            ingester.execute(null);
+        } else {
+            Scheduler scheduler = new StdSchedulerFactory().getScheduler()
 
-        JobDetail job = newJob(Ingester.class)
-                .withIdentity("ingester", "ingestGroup")
-                .build()
+            JobDetail job = newJob(Ingester.class)
+                    .withIdentity("ingester", "ingestGroup")
+                    .build()
 
-        Trigger trigger = newTrigger()
-                .withIdentity("ingestTrigger", "ingestGroup")
-                .startNow()
-                .withSchedule(cronSchedule(EVERY_10_MINS))
-                .build()
+            Trigger trigger = newTrigger()
+                    .withIdentity("ingestTrigger", "ingestGroup")
+                    .startNow()
+                    .withSchedule(cronSchedule(EVERY_10_MINS))
+                    .build()
 
-        scheduler.scheduleJob job, trigger
-        scheduler.start()
-        log.info "Scheduler started with following cron schedule '$EVERY_10_MINS'"
+            scheduler.scheduleJob job, trigger
+            scheduler.start()
+            log.info "Scheduler started with following cron schedule '$EVERY_10_MINS'"
+        }
+
     }
 
     public static String baseUrl() {

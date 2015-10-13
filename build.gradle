@@ -32,6 +32,9 @@ dependencies {
 }
 
 task execute(type:JavaExec) {
+    environment += [
+            "RUN_ONCE":"true"
+    ]
     main = mainClassName
     classpath = sourceSets.main.runtimeClasspath
 }
